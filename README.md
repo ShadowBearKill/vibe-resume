@@ -38,6 +38,7 @@ VibeResume 的思路是：**把网页作为简历源文件，把 AI 当作编辑
 - **像 vibe coding 一样编辑简历**：直接告诉 AI 目标岗位、修改方向和版式要求，让它修改 `index.html` 与 `styles.css`。
 - **网页即源文件**：简历内容、布局、图标、链接都在静态 HTML/CSS 中维护，天然适合 Git 版本管理。
 - **实时预览与可视化修改**：沿用 PPT Master 的三栏编辑、暂存、撤销和标注交接流程，适配 HTML 简历。
+- **Quick generation 快速生成**：沿用加入实时预览和可视化修改前的工作流程，直接编辑 HTML/CSS、导出并校验 PDF，不自动启动实时预览编辑器。
 - **一键导出 PDF**：使用 Chromium 渲染网页的 `screen` 布局；一页模板动态测量 `.page` 高度，双页模板识别 `.resume-page` 并按页导出。
 - **分类模板**：`templates/internship-employment/` 提供两种实习就业模板，`templates/research-application/` 提供科研申请模板。
 - **避免打印错位**：不依赖手动浏览器打印，不触发不可控的纸张边距、分页、缩放和 `@media print` 差异。
@@ -124,6 +125,21 @@ export/vibe-resume-research-classic-demo.pdf
 ```bash
 ./export-pdf.sh export/my-two-page-resume.pdf templates/internship-employment/dense-two-page/index.html
 ```
+
+### Quick generation 快速生成
+
+将已有经历或原简历交给 AI，明确要求快速生成即可：
+
+```text
+使用 vibe-resume-editor，快速生成一页中文后端实习简历，不启动实时预览编辑器。
+根据以下真实经历，按原有 HTML/CSS 编辑、PDF 导出和校验流程处理。
+输出到 export/backend-resume.pdf。
+[粘贴经历和目标 JD，或提供原简历文件路径]
+```
+
+Quick generation 就是 VibeResume 加入“实时预览与可视化修改”前的工作模式：沿用同一份 Skill 的编辑流程，仅跳过实时预览编辑器的自动启动。模板选择、内容与素材处理、必要询问、PDF 导出和校验均遵循原有规则；已有预览和标注的处理方式也保持一致。
+
+在聊天中明确说“快速生成”即可选择，无需新增命令行参数或模型配置。
 
 ## 模板选择
 
@@ -377,6 +393,7 @@ VibeResume is a vibe-coding friendly web-to-PDF resume template repository. It i
 
 - **AI-editable resume**: describe what you want, and let an AI agent update the HTML/CSS resume directly.
 - **Web-first source**: content, layout, links, icons, and styling are all version-controlled as static files.
+- **Quick generation**: use VibeResume's workflow from before live preview and visual editing were added: edit HTML/CSS, export and validate PDF, without automatically starting the live editor.
 - **Stable PDF export**: Chromium renders the screen layout and exports either a measured continuous page or explicit `.resume-page` pages.
 - **Template categories**: `templates/internship-employment/` contains standard one-page and dense technical layouts; `templates/research-application/` contains the research application layout.
 - **Print mismatch avoidance**: no manual browser print workflow, no unexpected print-media pagination.
@@ -408,6 +425,21 @@ Default PDF output:
 ```text
 export/vibe-resume-demo.pdf
 ```
+
+### Quick Generation
+
+Give the agent your experience notes or original resume and request:
+
+```text
+Use vibe-resume-editor in Quick generation mode to create a one-page backend internship resume.
+Do not start the live editor. Follow the original HTML/CSS editing, PDF export, and validation workflow.
+Export the PDF to export/backend-resume.pdf.
+[Experience notes, target JD, or source file paths]
+```
+
+Quick generation restores VibeResume's workflow from before live preview and visual editing were added. Both modes use the same Skill and editing steps; Quick only skips automatic live-editor startup. Template selection, content and asset handling, necessary questions, PDF export, and validation follow the original rules. Existing previews and submitted annotations retain their existing behavior.
+
+Select it by explicitly requesting quick generation in chat; no extra command-line flag or model configuration is needed.
 
 ### AI Workflow
 

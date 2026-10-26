@@ -1,6 +1,6 @@
 ---
 name: vibe-resume-editor
-description: Use when editing VibeResume templates, converting resume facts and target roles into polished one-page or two-page HTML resumes, and validating the generated PDF.
+description: Use when editing VibeResume templates, generating one-page or two-page HTML resumes from facts and target roles in Default or Quick generation mode, and validating the generated PDF.
 ---
 
 # VibeResume Editor
@@ -14,6 +14,16 @@ Template sources:
 - Standard one-page template: `templates/internship-employment/standard-one-page/index.html` + `styles.css`
 - Dense one/two-page technical template: `templates/internship-employment/dense-two-page/index.html` + `templates/internship-employment/dense-two-page/styles.css`
 - Research application template: `templates/research-application/research-classic/index.html` + `templates/research-application/research-classic/styles.css`
+
+## Generation Mode
+
+Both modes use the same Editing Workflow below:
+
+- **Default**: start or reuse the live-preview editor at step 3.
+- **Quick generation**: when the user explicitly requests quick/fast generation or the original workflow without the live editor, skip step 3's automatic preview startup. This is VibeResume's workflow from before live preview and visual editing were added: edit HTML/CSS, export PDF, and validate.
+
+Quick adds no separate template, content, asset, confirmation, or validation rules.
+Existing previews and submitted annotations retain their existing behavior.
 
 ## Core Rules
 
@@ -52,7 +62,7 @@ For personal-resume mode:
 1. Inspect `README.md`, `scripts/export-pdf.mjs`, and the HTML/CSS pair for the selected template.
 2. Identify whether the task is demo/template maintenance or a real personal resume.
 3. Select `templates/internship-employment/standard-one-page/`, `templates/internship-employment/dense-two-page/`, or `templates/research-application/research-classic/` using the rules above.
-   Before authoring, start `node scripts/live-preview/server.mjs <selected-html> --daemon` and report the actual URL. Reuse a running preview for that HTML. The editor watches the selected HTML and its linked CSS; do not open a different template from the one being edited or exported.
+   In Default mode, before authoring, start `node scripts/live-preview/server.mjs <selected-html> --daemon` and report the actual URL. Reuse a running preview for that HTML. Quick generation skips this automatic startup. The editor watches the selected HTML and its linked CSS; do not open a different template from the one being edited or exported.
 4. Update resume content in the selected HTML file.
 5. Adjust spacing, width, typography, density, and page balance in the selected CSS file only when needed.
 6. For company logos, ask the user to manually download the intended SVG from `https://www.iconfont.cn/` (or an official brand library) and attach it; then copy it into `assets/logos/`. For AI/model/provider marks, follow `https://lobehub.com/icons/skill.md`: inspect `toc`, select a supported variant, use `getLobeIconCDN`, and store it locally. Do not guess slugs or substitute a product logo for a company logo without explicit user approval.
@@ -137,6 +147,10 @@ Validation expectations:
 - The generated PDF visually matches the browser page closely because the exporter uses Chromium screen layout.
 
 ## Useful User Prompts
+
+```text
+快速生成一页中文后端实习简历，按原有 HTML/CSS 编辑与 PDF 导出流程处理，不启动实时预览编辑器。
+```
 
 ```text
 把这份模板改成我的算法实习简历，保持一页 PDF，突出模型部署、推理优化和工程落地。
